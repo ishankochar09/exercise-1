@@ -1,7 +1,8 @@
-package handler
+package product
 
 import (
 	"strconv"
+	"trainig/exercise1/internal/handler"
 	"trainig/exercise1/internal/models"
 
 	"developer.zopsmart.com/go/gofr/pkg/errors"
@@ -9,10 +10,10 @@ import (
 )
 
 type Product struct {
-	service ProductService
+	service handler.ProductService
 }
 
-func NewProductHandler(han ProductService) *Product {
+func NewProductHandler(han handler.ProductService) *Product {
 	return &Product{han}
 }
 
@@ -41,39 +42,6 @@ func (p *Product) GetProduct(ctx *gofr.Context) (interface{}, error) {
 	}
 
 	res, err := p.service.GetProduct(ctx, product, id)
-
-	return res, err
-}
-
-func (p *Product) AddVariant(ctx *gofr.Context) (interface{}, error) {
-	variant := &models.Variant{}
-	// params := ctx.Params()
-	// pid := params["pid"]
-	// if pid
-
-	param := ctx.PathParam("pid")
-
-	err := ctx.Bind(variant)
-
-	variant.ProductID = param
-
-	if err != nil {
-		return nil, errors.InvalidParam{Param: []string{"id"}}
-	}
-
-	return p.service.AddVariant(ctx, variant)
-}
-
-func (p *Product) GetVariant(ctx *gofr.Context) (interface{}, error) {
-	param := ctx.PathParam("pid")
-
-	paramID := ctx.PathParam("vid")
-
-	res, err := p.service.GetVariant(ctx, param, paramID)
-
-	if err != nil {
-		return nil, err
-	}
 
 	return res, err
 }

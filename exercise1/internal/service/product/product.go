@@ -1,17 +1,18 @@
-package service
+package product
 
 import (
 	"trainig/exercise1/internal/models"
+	"trainig/exercise1/internal/service"
 
 	"developer.zopsmart.com/go/gofr/pkg/errors"
 	"developer.zopsmart.com/go/gofr/pkg/gofr"
 )
 
 type product struct {
-	ProductSVC ProductStore
+	ProductSVC service.ProductStore
 }
 
-func NewProductService(store ProductStore) *product {
+func NewProductService(store service.ProductStore) *product {
 	return &product{store}
 }
 
@@ -38,23 +39,4 @@ func (p *product) GetProduct(ctx *gofr.Context, product *models.Product, id int)
 	response.Product = res
 	response.Variant = resp
 	return response, nil
-}
-
-func (p *product) AddVariant(ctx *gofr.Context, variant *models.Variant) (int, error) {
-	if variant.ProductID == "" {
-		return 0, errors.MissingParam{Param: []string{"product_id"}}
-	}
-
-	res, err := p.ProductSVC.AddVariant(ctx, variant)
-
-	if err != nil {
-		return 0, err
-	}
-
-	return res, nil
-}
-
-func (p *product) GetVariant(ctx *gofr.Context, productID, variantID string) (*models.Variant, error) {
-	res:= p.ProductSVC.GetVariant(ctx, productID, variantID)
-	return res, nil
 }

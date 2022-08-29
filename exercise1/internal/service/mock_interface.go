@@ -50,21 +50,6 @@ func (mr *MockProductStoreMockRecorder) AddProduct(ctx, product interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddProduct", reflect.TypeOf((*MockProductStore)(nil).AddProduct), ctx, product)
 }
 
-// AddVariant mocks base method.
-func (m *MockProductStore) AddVariant(ctx *gofr.Context, variant *models.Variant) (int, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddVariant", ctx, variant)
-	ret0, _ := ret[0].(int)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// AddVariant indicates an expected call of AddVariant.
-func (mr *MockProductStoreMockRecorder) AddVariant(ctx, variant interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddVariant", reflect.TypeOf((*MockProductStore)(nil).AddVariant), ctx, variant)
-}
-
 // GetProduct mocks base method.
 func (m *MockProductStore) GetProduct(ctx *gofr.Context, product *models.Product, id int) models.Product {
 	m.ctrl.T.Helper()
@@ -93,8 +78,46 @@ func (mr *MockProductStoreMockRecorder) GetProductVariants(ctx, pid interface{})
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProductVariants", reflect.TypeOf((*MockProductStore)(nil).GetProductVariants), ctx, pid)
 }
 
+// MockVariantStore is a mock of VariantStore interface.
+type MockVariantStore struct {
+	ctrl     *gomock.Controller
+	recorder *MockVariantStoreMockRecorder
+}
+
+// MockVariantStoreMockRecorder is the mock recorder for MockVariantStore.
+type MockVariantStoreMockRecorder struct {
+	mock *MockVariantStore
+}
+
+// NewMockVariantStore creates a new mock instance.
+func NewMockVariantStore(ctrl *gomock.Controller) *MockVariantStore {
+	mock := &MockVariantStore{ctrl: ctrl}
+	mock.recorder = &MockVariantStoreMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockVariantStore) EXPECT() *MockVariantStoreMockRecorder {
+	return m.recorder
+}
+
+// AddVariant mocks base method.
+func (m *MockVariantStore) AddVariant(ctx *gofr.Context, variant *models.Variant) (int, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddVariant", ctx, variant)
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddVariant indicates an expected call of AddVariant.
+func (mr *MockVariantStoreMockRecorder) AddVariant(ctx, variant interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddVariant", reflect.TypeOf((*MockVariantStore)(nil).AddVariant), ctx, variant)
+}
+
 // GetVariant mocks base method.
-func (m *MockProductStore) GetVariant(ctx *gofr.Context, productID, variantID string) *models.Variant {
+func (m *MockVariantStore) GetVariant(ctx *gofr.Context, productID, variantID string) *models.Variant {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetVariant", ctx, productID, variantID)
 	ret0, _ := ret[0].(*models.Variant)
@@ -102,7 +125,7 @@ func (m *MockProductStore) GetVariant(ctx *gofr.Context, productID, variantID st
 }
 
 // GetVariant indicates an expected call of GetVariant.
-func (mr *MockProductStoreMockRecorder) GetVariant(ctx, productID, variantID interface{}) *gomock.Call {
+func (mr *MockVariantStoreMockRecorder) GetVariant(ctx, productID, variantID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVariant", reflect.TypeOf((*MockProductStore)(nil).GetVariant), ctx, productID, variantID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVariant", reflect.TypeOf((*MockVariantStore)(nil).GetVariant), ctx, productID, variantID)
 }

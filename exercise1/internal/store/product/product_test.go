@@ -1,4 +1,4 @@
-package store
+package product
 
 import (
 	"context"
@@ -77,37 +77,6 @@ func TestGetProduct(t *testing.T){
 		}
 		for _, tc := range tests {
 			res := p.GetProduct(ctx,&input,tc.id )
-			assert.Equal(t, tc.out, res, tc.desc)
-		}
-}
-
-func TestGetVariant(t *testing.T){
-	ctx, mock, db := NewMock()
-	defer db.Close()
-	p:=NewProductRepo()
-
-	input := models.Variant{ID: "1", ProductID: "1", VariantName: "parle", VariantDetails: "biscuit"}
-	rows := sqlmock.NewRows([]string{"id", "product_id", "variantName", "variantDetails"}).
-		AddRow(input.ID, input.ProductID, input.VariantName, input.VariantDetails)
-
-		mock.ExpectQuery("select id, product_id, variantName, variantDetails from variant where product_id = ? and id = ?").
-		WithArgs(input.ID, input.ProductID).WillReturnRows(rows)
-
-		tests := []struct {
-			desc string
-			id   string
-			out  *models.Variant
-			err  error
-		}{
-			{
-				desc: "success",
-				id:   "1",
-				out:  &models.Variant{ID:"1", ProductID:"1", VariantName:"parle", VariantDetails:"biscuit"},
-				err:  nil,
-			},
-		}
-		for _, tc := range tests {
-			res := p.GetVariant(ctx,input.ProductID, tc.id )
 			assert.Equal(t, tc.out, res, tc.desc)
 		}
 }
